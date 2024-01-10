@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &releaseName prometheus
+  namespace: monitoring
+spec:
+  releaseName: *releaseName
+  interval: 15m
+  chart:
+    spec:
+      chart: prometheus
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+      version: 25.3.0
+  values:
+    prometheus-pushgateway:
+      enabled: false
